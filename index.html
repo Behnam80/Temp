@@ -4,30 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BME280 Sensor Data</title>
+</head>
+<body>
+    <h1>BME280 Sensor Data</h1>
+    <div id="sensorData">
+        <p>Loading sensor data...</p>
+    </div>
+
     <script>
         // Function to fetch sensor data from your server
         function fetchSensorData() {
-            fetch('http://192.168.1.82/') // Replace <your-server-ip> with your ESP32's IP address
+            fetch('http://<your-server-ip>/') // Replace <your-server-ip> with your ESP32's IP address
             .then(response => response.json())
             .then(data => {
                 // Update HTML elements with sensor data
-                document.getElementById('temperature').innerText = data.temperature + " °C";
-                document.getElementById('humidity').innerText = data.humidity + " %";
-                document.getElementById('pressure').innerText = data.pressure + " hPa";
+                document.getElementById('sensorData').innerHTML = `
+                    <p>Temperature: ${data.temperature} °C</p>
+                    <p>Humidity: ${data.humidity} %</p>
+                    <p>Pressure: ${data.pressure} hPa</p>
+                `;
             })
-            .catch(error => console.error('Error fetching sensor data:', error));
+            .catch(error => {
+                console.error('Error fetching sensor data:', error);
+                document.getElementById('sensorData').innerHTML = '<p>Error fetching sensor data</p>';
+            });
         }
 
         // Fetch sensor data on page load
         window.onload = fetchSensorData;
     </script>
-</head>
-<body>
-    <h1>BME280 Sensor Data</h1>
-    <div>
-        <p>Temperature: <span id="temperature">Loading...</span></p>
-        <p>Humidity: <span id="humidity">Loading...</span></p>
-        <p>Pressure: <span id="pressure">Loading...</span></p>
-    </div>
 </body>
 </html>
