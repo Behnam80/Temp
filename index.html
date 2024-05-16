@@ -14,7 +14,7 @@
     <script>
         // Function to fetch sensor data from your server
         function fetchSensorData() {
-            fetch('http://<your-server-ip>/') // Replace <your-server-ip> with your ESP32's IP address
+            fetch('http://192.168.1.82/') // Replace <your-server-ip> with your ESP32's IP address
             .then(response => response.json())
             .then(data => {
                 // Update HTML elements with sensor data
